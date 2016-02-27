@@ -29,6 +29,7 @@ public class EstoqueWS {
 	@WebMethod(operationName="ItensPeloCodigo")
 	@WebResult(name="ItemEstoque")
 	public List<ItemEstoque> getQuantidade(
+			//@WebParam(name="token", header=true) String token,
 			@WebParam(name="codigo") List<String> codigos){
 		
 		List<ItemEstoque> itens = new ArrayList<ItemEstoque>();
