@@ -11,14 +11,14 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-@WebService(name="v1/EstoqueWS")
+@WebService(targetNamespace="http://caelum.com.br/estoquews/v1")
 @Stateless
 public class EstoqueWS {
 
 	private Map<String, ItemEstoque> repositorio  = new HashMap<String, ItemEstoque>();
 	
 	public EstoqueWS() {
-		repositorio.put("SOA", new ItemEstoque("SOA", 5));
+		repositorio.put("SOA", new ItemEstoque("SOA", 3));
 		repositorio.put("TTD", new ItemEstoque("TTD", 1));
 		repositorio.put("RES", new ItemEstoque("RES", 2));
 		repositorio.put("LOG", new ItemEstoque("LOG", 4));
@@ -29,8 +29,12 @@ public class EstoqueWS {
 	@WebMethod(operationName="ItensPeloCodigo")
 	@WebResult(name="ItemEstoque")
 	public List<ItemEstoque> getQuantidade(
-			//@WebParam(name="token", header=true) String token,
+			@WebParam(name="tokenUsuario", header=true) String token,
 			@WebParam(name="codigo") List<String> codigos){
+		
+		if(token == null || !token.equals("TOKEN123")){
+			throw new AutorizacaoException("Não autorizado");
+		}
 		
 		List<ItemEstoque> itens = new ArrayList<ItemEstoque>();
 		
